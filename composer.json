@@ -23,7 +23,8 @@
         "michelf/php-markdown": "^1.7",
         "cebe/markdown": "~1.1.1",
         "kzykhys/ciconia": "~1.0.0",
-        "picas/markdown-extended": "dev-master"
+        "picas/markdown-extended": "dev-master",
+        "league/html-to-markdown": "^4.4"
     },
     "require-dev": {
     },
