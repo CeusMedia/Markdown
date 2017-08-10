@@ -1,5 +1,5 @@
 <?php
-require_once '../../vendor/autoload.php';
+require_once '../../../vendor/autoload.php';
 
 use \CeusMedia\Markdown\Parser\Html;
 
@@ -61,7 +61,7 @@ jQuery(document).ready(function(){});
 			<div class="navbar-inner">
 				<div class="container">
 					<form action.="./html.php" method="get">
-						<span class="brand">Markdown <small>&gt;</small> <a href="../">Demo</a> <small>&gt;</small> <a href="./">Parser</a> <small>&gt;</small> <strong>HTML</strong></span>
+						<span class="brand">Markdown <small>&gt;</small> <a href="../../">Demo</a> <small>&gt;</small> <!--<a href="../">Parser</a>--><span>Parser</span> <small>&gt;</small> <strong>HTML</strong></span>
 						<ul class="nav nav-list">
 							<li><select name="file" onchange="this.form.submit();">'.$optFile.'</select></li>
 							<li><select name="parser" onchange="this.form.submit();">'.$optParser.'</select></li>

@@ -1,11 +1,11 @@
 <?php
-require_once '../../vendor/autoload.php';
+require_once '../../../vendor/autoload.php';
 
 use \CeusMedia\Markdown\Renderer\Html;
 
 class Demo_Renderer_Html{
 
-	protected $renderer;
+	protected $renderer		= 0;
 	protected $file;
 
 	public function run(){
@@ -19,7 +19,7 @@ class Demo_Renderer_Html{
 	protected function render(){
 		$content	= '';
 		if( $this->file && $this->renderer ){
-			$markdown	= file_get_contents( $this->file );
+			$markdown	= file_get_contents( '../'.$this->file );
 			$converter	= new Html( $this->renderer );
 			$html		= $converter->convert( $markdown );
 			$content	= '
@@ -40,7 +40,7 @@ class Demo_Renderer_Html{
 
 
 		$optFile	= array( '<option value="">- select file -</option>' );
-		$index	= new \DirectoryIterator('./');
+		$index	= new \DirectoryIterator('../');
 		foreach( $index as $entry ){
 			if( $entry->isDir() || $entry->isDot() )
 				continue;
@@ -56,17 +56,17 @@ class Demo_Renderer_Html{
 		<link rel="stylesheet" href="//cdn.ceusmedia.de/css/bootstrap.min.css"/>
 		<script>
 jQuery(document).ready(function(){
-	jQuery(".content table").addClass("table");
+	jQuery(".demo-code-container table").addClass("table");
 });
 		</script>
-		<link rel="stylesheet" href="../style.css"/>
+		<link rel="stylesheet" href="../../style.css"/>
 	</head>
 	<body>
 		<div class="navbar navbar-static-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<form action.="./html.php" method="get">
-					<span class="brand">Markdown <small>&gt;</small> <a href="../">Demo</a> <small>&gt;</small> <a href="./">Renderer</a> <small>&gt;</small> <strong>HTML</strong></span>
+					<form action.="./html/" method="get">
+					<span class="brand">Markdown <small>&gt;</small> <a href="../../">Demo</a> <small>&gt;</small> <!--<a href="../">Renderer</a>--><span>Renderer</span> <small>&gt;</small> <strong>HTML</strong></span>
 						<ul class="nav nav-list">
 							<li><select name="file" onchange="this.form.submit();">'.$optFile.'</select></li>
 							<li><select name="renderer" onchange="this.form.submit();">'.$optRenderer.'</select></li>
@@ -90,12 +90,12 @@ jQuery(document).ready(function(){
 }
 
 $app	= new Demo_Renderer_Html();
-$app->setRenderer( Html::RENDERER_PARSEDOWN );
-$app->setRenderer( Html::RENDERER_MICHELF );
-$app->setRenderer( Html::RENDERER_MICHELF_EXTRA );
-$app->setRenderer( Html::RENDERER_CEBE );
-$app->setRenderer( Html::RENDERER_CEBE_GITHUB );
-$app->setRenderer( Html::RENDERER_CICONIA );
-$app->setRenderer( Html::RENDERER_CICONIA_GITHUB );
+#$app->setRenderer( Html::RENDERER_PARSEDOWN );
+#$app->setRenderer( Html::RENDERER_MICHELF );
+#$app->setRenderer( Html::RENDERER_MICHELF_EXTRA );
+#$app->setRenderer( Html::RENDERER_CEBE );
+#$app->setRenderer( Html::RENDERER_CEBE_GITHUB );
+#$app->setRenderer( Html::RENDERER_CICONIA );
+#$app->setRenderer( Html::RENDERER_CICONIA_GITHUB );
 #$app->setRenderer( Html::RENDERER_MARKDOWN_EXTENDED );
 $app->run();
