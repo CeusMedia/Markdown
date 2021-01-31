@@ -17,14 +17,14 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "php": "^5.3.0 || ^7",
-        "league/commonmark": "^0.11",
-        "erusev/parsedown": "^1.6",
+        "php": ">=7.2",
+        "league/commonmark": "^1",
+        "erusev/parsedown": "^1.7",
         "michelf/php-markdown": "^1.7",
         "cebe/markdown": "~1.1.1",
         "kzykhys/ciconia": "~1.0.0",
         "picas/markdown-extended": "dev-master",
-        "league/html-to-markdown": "^4.4"
+        "league/html-to-markdown": "^4"
     },
     "require-dev": {
     },
