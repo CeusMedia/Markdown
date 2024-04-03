@@ -3,18 +3,19 @@ namespace CeusMedia\Markdown;
 
 use \CeusMedia\Markdown\Parser;
 
-class Suggest{
-
+class Suggest
+{
 	const REQUIRE_EXTRA			= 5;
 	const REQUIRE_GITHUB		= 6;
 	const REQUIRE_CLI			= 0;
 	const REQUIRE_SPEED			= 9;
 
-	static public function suggest( $requirements = array()	){
+	public static function suggest( array $requirements = [] )
+	{
 		$reflection	= new \ReflectionClass( '\CeusMedia\Markdown\Parser' );
 		$parsers	= array();
 		foreach( $reflection->getConstants() as $key => $value ){
-			if( preg_match( '/^PARSER_/', $key ) )
+			if( str_starts_with( $key, 'PARSER_' ) )
 				$parsers[$key]	= $value;
 		}
 		foreach( $requirements as $requirement ){
@@ -46,5 +47,4 @@ class Suggest{
 		}
 		return $parsers;
 	}
-
 }

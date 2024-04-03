@@ -101,4 +101,11 @@ $app	= new Demo_Renderer_Html();
 #$app->setRenderer( Html::RENDERER_CICONIA );
 #$app->setRenderer( Html::RENDERER_CICONIA_GITHUB );
 #$app->setRenderer( Html::RENDERER_MARKDOWN_EXTENDED );
-$app->run();
+
+try{
+	ini_set( 'display_errors', 'On' );
+	$app->run();
+
+} catch ( Exception $e ){
+	die( $e->getMessage() );
+}
