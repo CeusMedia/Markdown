@@ -6,14 +6,14 @@ use \CeusMedia\Markdown\Renderer\Html;
 class Demo_Renderer_Html
 {
 	protected int $renderer		= 0;
-	protected $file;
+	protected ?string $file		= NULL;
 
 	public function run(): void
 	{
 		if( isset( $_GET['file'] ))
 			$this->file	= $_GET['file'];
 		if( isset( $_GET['renderer'] ))
-			$this->renderer	= $_GET['renderer'];
+			$this->renderer	= (int) $_GET['renderer'];
 		print( $this->render() );
 	}
 
