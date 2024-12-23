@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CeusMedia\Markdown\Renderer;
 
 use Erusev\Parsedown\Parsedown;
@@ -144,11 +146,11 @@ class Html{
 				return $renderer->render( $markdown );
 			case self::RENDERER_MARKDOWN_EXTENDED:
 				$renderer = new MarkdownExtendedParser();
-				return $renderer->transform( $markdown );
+				return $renderer->transform( $markdown )->getContent();
 			case self::RENDERER_COMMONMARK:
 			default:
 				$converter = new CommonMarkConverter();
-				return $converter->convert( $markdown );
+				return $converter->convert( $markdown )->getContent();
 		}
 	}
 

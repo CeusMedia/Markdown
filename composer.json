@@ -28,15 +28,20 @@
         "picas/markdown-extended": "*",
         "cebe/markdown": "1.2.1",
         "phpunit/phpunit": "^10"
-
     },
     "suggest": {
-        "erusev/parsedown": "Parsdown renderer",
-        "picas/markdown-extended": "Markdown extended"
+        "erusev/parsedown": "Better Markdown Parser in PHP",
+        "picas/markdown-extended": "A PHP parser for the Markdown Extended syntax",
+        "cebe/markdown": "A super fast, highly extensible markdown parser for PHP"
     },
     "autoload": {
         "psr-4": {
             "CeusMedia\\Markdown\\": ["src/"]
         }
+    },
+    "scripts": {
+        "dev:phpunit": [
+            "XDEBUG_MODE=coverage php vendor/bin/phpunit --configuration phpunit.xml --testsuite units"
+        ]
     }
 }

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace CeusMedia\Markdown\Parser;
 
 use League\HTMLToMarkdown\HtmlConverter;
@@ -17,44 +19,58 @@ use ReflectionClass;
 
 class Html
 {
-
-	const PARSER_COMMONMARK 			= 1;
+	const PARSER_COMMONMARK 	= 1;
 
 	protected int $parser		= self::PARSER_COMMONMARK;
 
-	public function __construct( $parser = 0 ){
+	/**
+	 *	@return		array
+	 */
+	public static function getParsers(): array
+	{
+		$reflection	= new ReflectionClass( __CLASS__ );
+		return array_filter( $reflection->getConstants(), function( $key ){
+			return str_starts_with( $key, 'PARSER_' );
+		}, ARRAY_FILTER_USE_KEY );
+	}
+
+	/**
+	 *	@param		int		$parser
+	 */
+	public function __construct( int $parser = self::PARSER_COMMONMARK )
+	{
 		$this->setParser( $parser );
 	}
 
-	static public function getParsers(): array
-	{
-		$reflection	= new ReflectionClass( __CLASS__ );
-		$list	= array();
-		foreach( $reflection->getConstants() as $key => $value )
-			if( str_starts_with( $key, 'PARSER_' ) )
-				$list[$key]	= $value;
-		return $list;
-	}
-
+	/**
+	 *	@param		string		$html
+	 *	@return		string
+	 */
 	public function convert( string $html ): string
 	{
 		switch( $this->parser ){
 			case self::PARSER_COMMONMARK:
 			default:
-				$converter = new HtmlConverter();
+				$converter	= new HtmlConverter();
 				return $converter->convert( $html );
 		}
 	}
 
 	/**
 	 *	Alias for convert.
+	 *	@param		string		$html
+	 *	@return		string
 	 */
 	public function render( string $html ): string
 	{
 		return $this->convert( $html );
 	}
 
-	public function setParser( $parser ): self
+	/**
+	 *	@param		int		$parser
+	 *	@return		self
+	 */
+	public function setParser( int $parser = self::PARSER_COMMONMARK ): self
 	{
 		$this->parser	= $parser;
 		return $this;
@@ -62,8 +78,10 @@ class Html
 
 	/**
 	 *	Alias for convert.
+	 *	@param		string		$html
+	 *	@return		string
 	 */
-	public function transform( $html ): string
+	public function transform( string $html ): string
 	{
 		return $this->convert( $html );
 	}
