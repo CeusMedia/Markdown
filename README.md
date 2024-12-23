@@ -1,15 +1,24 @@
 # Markdown
+
+![Branch](https://img.shields.io/badge/Branch-0.2.x-blue?style=flat-square)
+![Release](https://img.shields.io/badge/Release-0.2.0-blue?style=flat-square)
+![PHP version](https://img.shields.io/badge/PHP-%5E8.1-blue?style=flat-square&color=777BB4)
+![PHPStan level](https://img.shields.io/badge/PHPStan_level----darkgreen?style=flat-square)
+[![Total downloads](http://img.shields.io/packagist/dt/ceus-media/markdown.svg?style=flat-square)](https://packagist.org/packages/ceus-media/common)
+[![Package version](http://img.shields.io/packagist/v/ceus-media/markdown.svg?style=flat-square)](https://packagist.org/packages/ceus-media/common)
+[![License](https://img.shields.io/packagist/l/ceus-media/markdown.svg?style=flat-square)](https://packagist.org/packages/ceus-media/common)
+
 Abstraction layer for using several Markdown converters, mostly written in PHP.
 
 ## Description
 
 ### Use Cases
 Allows to convert Markdown to other formats (HTML only at the moment).
-Within this library this process will done using a <code>Renderer</code>, since a Markdown code will be rendered into another format.
+Within this library this process will be done using a <code>Renderer</code>, since a Markdown code will be rendered into another format.
 Since there are several Markdown flavors and implementations, this library is providing an abstraction layer to easily switch between flavors.
 
 Allows to convert other formats (HTML only at the moment) to Markdown.
-Within this library this process will done using a <code>Parser</code>, since other formats will be parsed to be understood as Markdown.
+Within this library this process will be done using a <code>Parser</code>, since other formats will be parsed to be understood as Markdown.
 
 ### Aim
 This library aims to provide an abstraction layer for existing implementations for convert Markdown into and from other formats. This will be done by maintaining a list of Open Source packages and providing this collection easily using <code>composer</code>.

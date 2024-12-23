@@ -7,7 +7,7 @@
         {
             "name": "Christian Würker",
             "email": "christian.wuerker@ceusmedia.de",
-            "homepage": "http://ceusmedia.de/",
+            "homepage": "https://ceusmedia.de/",
             "role": "Developer"
         }
     ],
@@ -17,20 +17,31 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "php": ">=7.2",
-        "league/commonmark": "^1",
-        "erusev/parsedown": "^1.7",
-        "michelf/php-markdown": "^1.7",
-        "cebe/markdown": "~1.1.1",
-        "kzykhys/ciconia": "~1.0.0",
-        "picas/markdown-extended": "dev-master",
-        "league/html-to-markdown": "^4"
+        "php": "^8.1",
+        "league/commonmark": "2.6.0",
+        "league/html-to-markdown": "5.1.1",
+        "michelf/php-markdown": "2.0.0",
+        "kzykhys/ciconia": "v1.0.3"
     },
     "require-dev": {
+        "erusev/parsedown": "2.0.x-dev",
+        "picas/markdown-extended": "*",
+        "cebe/markdown": "1.2.1",
+        "phpunit/phpunit": "^10"
+    },
+    "suggest": {
+        "erusev/parsedown": "Better Markdown Parser in PHP",
+        "picas/markdown-extended": "A PHP parser for the Markdown Extended syntax",
+        "cebe/markdown": "A super fast, highly extensible markdown parser for PHP"
     },
     "autoload": {
         "psr-4": {
             "CeusMedia\\Markdown\\": ["src/"]
         }
+    },
+    "scripts": {
+        "dev:phpunit": [
+            "XDEBUG_MODE=coverage php vendor/bin/phpunit --configuration phpunit.xml --testsuite units"
+        ]
     }
 }

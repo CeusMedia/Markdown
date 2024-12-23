@@ -1,7 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace CeusMedia\Markdown\Parser;
 
 use League\HTMLToMarkdown\HtmlConverter;
+use ReflectionClass;
 
 /**
  *	Renderers:
@@ -14,50 +17,73 @@ use League\HTMLToMarkdown\HtmlConverter;
  *	@link		[Markdown Extended](http://manifest.aboutmde.org/)
  */
 
-class Html{
+class Html
+{
+	const PARSER_COMMONMARK 	= 1;
 
-	const PARSER_COMMONMARK 			= 1;
+	protected int $parser		= self::PARSER_COMMONMARK;
 
-	protected $parser		= self::PARSER_COMMONMARK;
+	/**
+	 *	@return		array
+	 */
+	public static function getParsers(): array
+	{
+		$reflection	= new ReflectionClass( __CLASS__ );
+		return array_filter( $reflection->getConstants(), function( $key ){
+			return str_starts_with( $key, 'PARSER_' );
+		}, ARRAY_FILTER_USE_KEY );
+	}
 
-	public function __construct( $parser = 0 ){
+	/**
+	 *	@param		int		$parser
+	 */
+	public function __construct( int $parser = self::PARSER_COMMONMARK )
+	{
 		$this->setParser( $parser );
 	}
 
-	static public function getParsers(){
-		$reflection	= new \ReflectionClass( __CLASS__ );
-		$list	= array();
-		foreach( $reflection->getConstants() as $key => $value )
-			if( preg_match( '/^PARSER_/', $key ) )
-				$list[$key]	= $value;
-		return $list;
-	}
-
-	public function convert( $html ){
+	/**
+	 *	@param		string		$html
+	 *	@return		string
+	 */
+	public function convert( string $html ): string
+	{
 		switch( $this->parser ){
 			case self::PARSER_COMMONMARK:
 			default:
-				$converter = new HtmlConverter();
+				$converter	= new HtmlConverter();
 				return $converter->convert( $html );
 		}
 	}
 
 	/**
 	 *	Alias for convert.
+	 *	@param		string		$html
+	 *	@return		string
 	 */
-	public function render( $html ){
+	public function render( string $html ): string
+	{
 		return $this->convert( $html );
 	}
 
-	public function setParser( $parser ){
+	/**
+	 *	@param		int		$parser
+	 *	@return		self
+	 */
+	public function setParser( int $parser = self::PARSER_COMMONMARK ): self
+	{
 		$this->parser	= $parser;
+		return $this;
 	}
 
 	/**
 	 *	Alias for convert.
+	 *	@param		string		$html
+	 *	@return		string
 	 */
-	public function transform( $html ){
+	public function transform( string $html ): string
+	{
 		return $this->convert( $html );
 	}
 }
-?>
+

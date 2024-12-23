@@ -1,10 +1,12 @@
 <?php
 require_once '../../../vendor/autoload.php';
+error_reporting( E_ALL );
+ini_set('display_errors', 'On');
 
 use \CeusMedia\Markdown\Parser\Html;
 
-class Demo_Parser_Html{
-
+class Demo_Parser_Html
+{
 	protected $parser;
 	protected $file;
 
@@ -16,7 +18,8 @@ class Demo_Parser_Html{
 		print( $this->render() );
 	}
 
-	protected function render(){
+	protected function render(): void
+	{
 		$content	= '';
 		if( $this->file && $this->parser ){
 			$html		= file_get_contents( $this->file );
@@ -79,11 +82,14 @@ jQuery(document).ready(function(){});
 		print( $html );
 	}
 
-	public function setParser( $parser ){
+	public function setParser( $parser ): self
+	{
 		$this->parser	= $parser;
+		return $this;
 	}
 
-	protected function view( $file, $parser = Html::PARSER_COMMONMARK ){
+	protected function view( $file, $parser = Html::PARSER_COMMONMARK ): string
+	{
 		$parser		= $parser ? $parser : $this->parser;
 		$markdown	= file_get_contents( $file );
 		$converter	= new Html( $parser );

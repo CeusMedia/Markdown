@@ -3,20 +3,22 @@ require_once '../../../vendor/autoload.php';
 
 use \CeusMedia\Markdown\Renderer\Html;
 
-class Demo_Renderer_Html{
+class Demo_Renderer_Html
+{
+	protected int $renderer		= 0;
+	protected ?string $file		= NULL;
 
-	protected $renderer		= 0;
-	protected $file;
-
-	public function run(){
+	public function run(): void
+	{
 		if( isset( $_GET['file'] ))
 			$this->file	= $_GET['file'];
 		if( isset( $_GET['renderer'] ))
-			$this->renderer	= $_GET['renderer'];
+			$this->renderer	= (int) $_GET['renderer'];
 		print( $this->render() );
 	}
 
-	protected function render(){
+	protected function render(): string
+	{
 		$content	= '';
 		if( $this->file && $this->renderer ){
 			$markdown	= file_get_contents( '../'.$this->file );
@@ -40,11 +42,11 @@ class Demo_Renderer_Html{
 
 
 		$optFile	= array( '<option value="">- select file -</option>' );
-		$index	= new \DirectoryIterator('../');
+		$index	= new DirectoryIterator('../');
 		foreach( $index as $entry ){
 			if( $entry->isDir() || $entry->isDot() )
 				continue;
-			if( !preg_match( '/md$/', $entry->getFilename() ) )
+			if( !str_ends_with( $entry->getFilename(), 'md' ) )
 				continue;
 			$optFile[]	= '<option value="'.$entry->getFilename().'" '.( $this->file == $entry->getFilename() ? 'selected' : '' ).'>'.$entry->getFilename().'</option>';
 		}
@@ -81,10 +83,11 @@ jQuery(document).ready(function(){
 		</div>
 	</body>
 </html>';
-		print( $html );
+		return $html;
 	}
 
-	public function setRenderer( $renderer ){
+	public function setRenderer( int $renderer ): void
+	{
 		$this->renderer	= $renderer;
 	}
 }
@@ -98,4 +101,11 @@ $app	= new Demo_Renderer_Html();
 #$app->setRenderer( Html::RENDERER_CICONIA );
 #$app->setRenderer( Html::RENDERER_CICONIA_GITHUB );
 #$app->setRenderer( Html::RENDERER_MARKDOWN_EXTENDED );
-$app->run();
+
+try{
+	ini_set( 'display_errors', 'On' );
+	$app->run();
+
+} catch ( Exception $e ){
+	die( $e->getMessage() );
+}
