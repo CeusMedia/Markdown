@@ -27,7 +27,9 @@
         "erusev/parsedown": "2.0.x-dev",
         "picas/markdown-extended": "*",
         "cebe/markdown": "1.2.1",
-        "phpunit/phpunit": "^10"
+        "phpstan/phpstan": "*",
+        "phpstan/phpstan-strict-rules": "*",
+        "phpunit/phpunit": "*"
     },
     "suggest": {
         "erusev/parsedown": "Better Markdown Parser in PHP",
@@ -40,8 +42,25 @@
         }
     },
     "scripts": {
+        "dev:all": [
+            "@dev:test-syntax",
+            "@dev:phpstan",
+            "@dev:phpunit"
+        ],
+        "dev:phpstan": [
+            "@dev:install-quiet",
+            "XDEBUG_MODE=off vendor/bin/phpstan analyse --configuration=util/phpstan.neon --memory-limit=1G --verbose"
+        ],
+        "dev:phpstan-clear": [
+            "@dev:install-quiet",
+            "vendor/bin/phpstan clear-result-cache --verbose"
+        ],
+        "dev:phpstan-save": [
+            "@dev:install-quiet",
+            "vendor/bin/phpstan analyse --configuration util/phpstan.neon --generate-baseline util/phpstan-baseline.neon"
+        ],
         "dev:phpunit": [
-            "XDEBUG_MODE=coverage php vendor/bin/phpunit --configuration phpunit.xml --testsuite units"
+            "XDEBUG_MODE=coverage php vendor/bin/phpunit --configuration util/phpunit.xml --testsuite units"
         ]
     }
 }

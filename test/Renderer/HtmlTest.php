@@ -5,12 +5,21 @@ namespace Renderer;
 use CeusMedia\Markdown\Renderer\Html as HtmlRenderer;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @coversDefaultClass    \CeusMedia\Markdown\Renderer\Html
+ */
 class HtmlTest extends TestCase
 {
 	protected string $markdown;
 	protected string $path;
 	protected HtmlRenderer $renderer;
 
+	/**
+	 *	@return		void
+	 *	@covers		::convert
+	 *	@covers		::render
+	 *	@covers		::transform
+	 */
 	public function testRender(): void
 	{
 		foreach( HtmlRenderer::getRenderers() as $renderer ){

@@ -1,7 +1,7 @@
 <?php
 namespace CeusMedia\Markdown;
 
-use \CeusMedia\Markdown\Parser;
+use CeusMedia\Markdown\Renderer\Html as HtmlRenderer;
 
 class Suggest
 {
@@ -10,39 +10,35 @@ class Suggest
 	const REQUIRE_CLI			= 0;
 	const REQUIRE_SPEED			= 9;
 
-	public static function suggest( array $requirements = [] )
+	public static function suggest( array $requirements = [] ): array
 	{
-		$reflection	= new \ReflectionClass( '\CeusMedia\Markdown\Parser' );
-		$parsers	= array();
-		foreach( $reflection->getConstants() as $key => $value ){
-			if( str_starts_with( $key, 'PARSER_' ) )
-				$parsers[$key]	= $value;
-		}
+		$parsers	= HtmlRenderer::getRenderers();
+
 		foreach( $requirements as $requirement ){
-			if( $requirement == self::REQUIRE_EXTRA ){
-				$parsers	= array_intersect( $parsers, array(
-					Parser::PARSER_PARSEDOWN,
-					Parser::PARSER_MICHELF_EXTRA,
-					Parser::PARSER_CEBE_EXTRA,
-				) );
+			if( self::REQUIRE_EXTRA === $requirement ){
+				$parsers	= array_intersect( $parsers, [
+					HtmlRenderer::RENDERER_PARSEDOWN,
+					HtmlRenderer::RENDERER_MICHELF_EXTRA,
+					HtmlRenderer::RENDERER_CEBE_EXTRA,
+				] );
 			}
-			if( $requirement == self::REQUIRE_GITHUB ){
-				$parsers	= array_intersect( $parsers, array(
-					Parser::PARSER_PARSEDOWN,
-					Parser::PARSER_CEBE_GITHUB,
-					Parser::PARSER_CICONIA_GITHUB,
-				) );
+			if( self::REQUIRE_GITHUB === $requirement ){
+				$parsers	= array_intersect( $parsers, [
+					HtmlRenderer::RENDERER_PARSEDOWN,
+					HtmlRenderer::RENDERER_CEBE_GITHUB,
+					HtmlRenderer::RENDERER_CICONIA_GITHUB,
+				] );
 			}
-			if( $requirement == self::REQUIRE_CLI ){
-				$parsers	= array_intersect( $parsers, array(
-					Parser::PARSER_COMMONMARK,
-					Parser::PARSER_CEBE,
-					Parser::PARSER_CEBE_EXTRA,
-					Parser::PARSER_CEBE_GITHUB,
-					Parser::PARSER_CICONIA,
-					Parser::PARSER_CICONIA_GITHUB,
-					Parser::PARSER_MARKDOWN_EXTENDED,
-				) );
+			if( self::REQUIRE_CLI === $requirement ){
+				$parsers	= array_intersect( $parsers, [
+					HtmlRenderer::RENDERER_COMMONMARK,
+					HtmlRenderer::RENDERER_CEBE,
+					HtmlRenderer::RENDERER_CEBE_EXTRA,
+					HtmlRenderer::RENDERER_CEBE_GITHUB,
+					HtmlRenderer::RENDERER_CICONIA,
+					HtmlRenderer::RENDERER_CICONIA_GITHUB,
+					HtmlRenderer::RENDERER_MARKDOWN_EXTENDED,
+				] );
 			}
 		}
 		return $parsers;
